@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>My weather app</title>
+  </head>
+  <body>
+	<h1>Weather in colombo</h1>
+	<p id="theTemp">Please wait...</p>
+	<p id="description">Please wait...</p>
+	<p id="myLastUpdated">Please wait...</p>
+	
+	<script>
+		
+		// Fetch Portsmouth weather data from API
+		fetch('https://mi-linux.wlv.ac.uk/~2441880/my-api.php?city=colombo')
+			
+		// Convert response string to json object
+		  .then(response => response.json())
+		  .then(response => {
+
+		// Display whole API response in browser console (take a look at it!)
+			console.log(response);
+				
+		// Copy one element of response to our HTML paragraph
+			document.getElementById("theTemp").innerHTML = 'Temperature: ' + response.weather_temperature+ '°C';
+			document.getElementById("description").innerHTML ='Weather: ' + response.weather_description;
+			document.getElementById("myLastUpdated").innerHTML ='Last Updated: ' + response.weather_when;
+				
+		  })
+		  .catch(err => {
+			
+		// Display errors in console
+			console.log(err);											
+		});
+
+	</script>								   
+											
+  </body>
+</html>
