@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>My weather app</title>
+  </head>
+  <body>
+	<h1>Weather in Portsmouth</h1>
+	<p id="myParagraph">Please wait...</p>
+	<p id="theTemp">Please wait...</p>
+	<p>Click the button to get your coordinates.</p>
+
+<button onclick="getLocation()">Try It</button>
+
+<p id="demo"></p>
+	<script>
+		const x = document.getElementById("demo");
+
+		function getLocation() {
+		  if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition);
+		  } else {
+			x.innerHTML = "Geolocation is not supported by this browser.";
+		  }
+		}
+
+		function showPosition(position) {
+		  x.innerHTML = "Latitude: " + position.coords.latitude +
+		  "<br>Longitude: " + position.coords.longitude;
+		}
+
+		// Fetch Portsmouth weather data from API
+		fetch('https://api.openweathermap.org/data/2.5/weather?units=metric&q=Portsmouth&appid=c12f77f163c9d18cec30096496705034')
+			
+		// Convert response string to json object
+		  .then(response => response.json())
+		  .then(response => {
+
+		// Display whole API response in browser console (take a look at it!)
+			console.log(response);
+				
+		// Copy one element of response to our HTML paragraph
+			document.getElementById("theTemp").innerHTML = 'Weather: ' + response.weather[0].description;
+			document.getElementById("myParagraph").innerHTML = 'Temperature: ' + response.main.temp + '°C' ;
+				
+		  })
+		  .catch(err => {
+			
+		// Display errors in console
+			console.log(err);											
+		});
+
+	</script>								   
+											
+  </body>
+</html>
